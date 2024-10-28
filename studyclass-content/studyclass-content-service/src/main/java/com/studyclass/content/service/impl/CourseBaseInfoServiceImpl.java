@@ -5,19 +5,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.studyclass.base.exception.StudyClassException;
 import com.studyclass.base.model.PageParams;
 import com.studyclass.base.model.PageResult;
-import com.studyclass.content.mapper.CourseBaseMapper;
-import com.studyclass.content.mapper.CourseCategoryMapper;
-import com.studyclass.content.mapper.CourseMarketMapper;
+import com.studyclass.content.mapper.*;
 import com.studyclass.content.model.dto.AddCourseDto;
 import com.studyclass.content.model.dto.CourseBaseInfoDto;
 import com.studyclass.content.model.dto.EditCourseDto;
 import com.studyclass.content.model.dto.QueryCourseParamsDto;
-import com.studyclass.content.model.po.CourseBase;
-import com.studyclass.content.model.po.CourseMarket;
+import com.studyclass.content.model.po.*;
 import com.studyclass.content.service.CourseBaseInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +34,16 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
 
     @Resource
     CourseCategoryMapper courseCategoryMapper;
+
+    @Autowired
+    CourseTeacherMapper courseTeacherMapper;
+
+    @Autowired
+    TeachplanMapper teachplanMapper;
+
+    @Autowired
+    TeachplanMediaMapper teachplanMediaMapper;
+
 
     /**
      * @param pageParams           分页查询参数
@@ -211,5 +219,32 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         //查询课程返回数据
         CourseBaseInfoDto courseBaseInfoDto = getCourseBaseInfo(courseId);
         return courseBaseInfoDto;
+    }
+
+    @Transactional
+    @Override
+    public void deleteCourseBase(Long companyId,Long courseId) {
+        // 课程基本信息、课程营销信息course_market、课程计划teachplan、课程计划关联信息teachplan_media、课程师资course_teacher
+        CourseBase courseBase = courseBaseMapper.selectById(courseId);
+        if (!companyId.equals(courseBase.getCompanyId()))
+            StudyClassException.cast("只能删除本机构的课程");
+        //删除师资
+        LambdaQueryWrapper<CourseTeacher> courseTeacherQueryWrapper = new LambdaQueryWrapper<>();
+        courseTeacherQueryWrapper.eq(CourseTeacher::getCourseId,courseId);
+        courseTeacherMapper.delete(courseTeacherQueryWrapper);
+        //删除课程计划/媒资相关信息
+        LambdaQueryWrapper<TeachplanMedia> teachplanMediaWrapper = new LambdaQueryWrapper<>();
+        teachplanMediaWrapper.eq(TeachplanMedia::getCourseId,courseId);
+        teachplanMediaMapper.delete(teachplanMediaWrapper);
+        LambdaQueryWrapper<Teachplan> teachplanWrapper = new LambdaQueryWrapper<>();
+        teachplanWrapper.eq(Teachplan::getCourseId,courseId);
+        teachplanMapper.delete(teachplanWrapper);
+        //删除课程营销信息、课程信息
+        LambdaQueryWrapper<CourseMarket> courseMarketWrapper = new LambdaQueryWrapper<>();
+        courseMarketWrapper.eq(CourseMarket::getId,courseId);
+        courseMarketMapper.delete(courseMarketWrapper);
+        LambdaQueryWrapper<CourseBase> courseBaseWrapper = new LambdaQueryWrapper<>();
+        courseBaseWrapper.eq(CourseBase::getId,courseId);
+        courseBaseMapper.delete(courseBaseWrapper);
     }
 }
