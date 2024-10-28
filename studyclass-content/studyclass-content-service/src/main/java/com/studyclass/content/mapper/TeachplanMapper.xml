@@ -41,6 +41,7 @@
         <result column="one_courseId" property="courseId"/>
         <result column="one_coursePubId" property="coursePubId"/>
         <result column="status" property="status"/>
+        <result column="one_preview" property="isPreview"/>
         <!--一对一关系-->
         <association property="teachplanMedia" javaType="com.studyclass.content.model.po.TeachplanMedia">
             <id column="teachplanMediaId" property="id"/>
@@ -59,6 +60,7 @@
             <result column="two_orderby" property="orderby"/>
             <result column="two_courseId" property="courseId"/>
             <result column="two_coursePubId" property="coursePubId"/>
+            <result column="two_preview" property="isPreview"/>
         </collection>
     </resultMap>
     <select id="selectTeachplanTreeNodes" parameterType="long" resultMap="treeNodeResultMap">
@@ -72,6 +74,7 @@
                one.orderby        one_orderby,
                one.course_id      one_courseId,
                one.course_pub_id  one_coursePubId,
+               one.is_preview     one_preview,
                two.id             two_id,
                two.pname          two_pname,
                two.parentid       two_parentid,
@@ -82,6 +85,7 @@
                two.orderby        two_orderby,
                two.course_id      two_courseId,
                two.course_pub_id  two_coursePubId,
+               two.is_preview     two_preview,
                m.id teachplanMediaId,
                m.media_fileName mediaFilename,
                m.media_id mediaId
