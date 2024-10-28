@@ -21,4 +21,6 @@ public interface CourseBaseInfoService {
     public CourseBaseInfoDto getCourseBaseInfo(Long courseId);
 
     public CourseBaseInfoDto modifyCourseBase(Long companyId,EditCourseDto editCourseDto);
+
+    public void deleteCourseBase(Long companyId,Long courseId);
 }

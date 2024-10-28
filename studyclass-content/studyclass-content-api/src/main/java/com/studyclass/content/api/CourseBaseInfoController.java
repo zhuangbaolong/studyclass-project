@@ -21,7 +21,6 @@ import java.util.List;
  */
 @Api(value = "课程信息管理",tags = "课程信息管理")
 @RestController
-@RequestMapping
 public class CourseBaseInfoController {
 
     @Autowired
@@ -51,5 +50,10 @@ public class CourseBaseInfoController {
     @PutMapping("/course")
     public CourseBaseInfoDto modifyCourseBase(@RequestBody @Validated EditCourseDto editCourseDto){
         return courseBaseInfoService.modifyCourseBase(1232141425L,editCourseDto);
+    }
+    @ApiOperation("删除课程")
+    @DeleteMapping("/course/{courseId}")
+    public void deleteCourseBase(@PathVariable Long courseId){
+        courseBaseInfoService.deleteCourseBase(1232141425L,courseId);
     }
 }
