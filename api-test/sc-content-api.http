@@ -13,3 +13,36 @@ Content-Type: application/json
 
 ###
 GET http://localhost:63040/content/course-category/tree-nodes
+
+###
+POST http://localhost:63040/content/course
+Content-Type: application/json
+
+{
+  "charge": "201001",
+  "price": 10,
+  "originalPrice":100,
+  "qq": "22333",
+  "wechat": "223344",
+  "phone": "13333333",
+  "validDays": 365,
+  "mt": "1-1",
+  "st": "1-1-1",
+  "name": "",
+  "pic": "ddd",
+  "teachmode": "200002",
+  "users": "初级人员",
+  "tags": "df",
+  "grade": "gradegrade",
+  "description": "java高级网络编程"
+}
+
+###
+GET http://localhost:63040/content/course/40
+
+###
+GET http://localhost:63040/content/teachplan/117/tree-nodes
+Content-Type: application/json
+
+###
+GET http://localhost:63040/content/teachplan/{{courseId}}/tree-nodes
