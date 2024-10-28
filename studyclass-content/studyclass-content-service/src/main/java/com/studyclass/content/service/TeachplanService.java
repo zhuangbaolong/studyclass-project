@@ -13,4 +13,8 @@ public interface TeachplanService {
     public List<TeachplanDto> getTeachplanTreeNodes(Long courseId);
 
     public void saveTeachplan(SaveTeachplanDto saveTeachplanDto);
+
+    public void deleteTeachplan(Long teachplanId);
+
+    public void moveTeachplan(String moveType, Long teachplanId);
 }
