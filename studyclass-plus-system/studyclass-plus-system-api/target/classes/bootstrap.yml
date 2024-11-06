@@ -2,18 +2,29 @@ server:
   servlet:
     context-path: /system
   port: 63110
+  spring:
+    application:
+      name: system-service
 #微服务配置
 spring:
   application:
     name: system-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.88.130:8848
+        namespace: dev
+        group: studyclass-project
+        username: nacos
+        password: nacos
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.88.130:3306/sc_system?serverTimezone=UTC&userUnicode=true&useSSL=false
     username: root
     password: 123
 # 日志文件配置路径
-logging:
-  config: classpath:log4j2-dev.xml
+#logging:
+#  config: classpath:log4j2-dev.xml
 
 # swagger 文档配置
 swagger:

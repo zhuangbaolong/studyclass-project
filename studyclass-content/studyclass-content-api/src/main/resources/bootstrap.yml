@@ -1,25 +1,49 @@
-server:
-  port: 63040
-  servlet:
-    context-path: /content
-
 #微服务配置
 spring:
   application:
-    name: content-api
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.88.130:3306/sc_content?serverTimezone=UTC&userUnicode=true&useSSL=false
-    username: root
-    password: 123
+    name: content-api #配置文件1.服务名 组合content-api-dev.yml
+  cloud:
+    nacos:
+      server-addr: 192.168.88.130:8848
+      discovery: #服务注册
+        namespace: dev
+        group: studyclass-project
+        username: nacos
+        password: nacos
+      config: #配置文件相关信息
+        namespace: dev
+        group: studyclass-project
+        file-extension: yml
+        refresh-enabled: true
+        extension-configs:
+          - data-id: content-service-${spring.profiles.active}.yml
+            group: studyclass-project
+            refresh: true
+        shared-configs:
+          - data-id: swagger-${spring.profiles.active}.yml
+            group: studyclass-common
+            refresh: true
+          - data-id: logging-${spring.profiles.active}.yml
+            group: studyclass-common
+            refresh: true
+          - data-id: freemarker-config-dev.yml
+            group: studyclass-common
+            refresh: true
+  profiles:
+    active: dev #配置文件2.环境名
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://192.168.88.130:3306/sc_content?serverTimezone=UTC&userUnicode=true&useSSL=false
+#    username: root
+#    password: 123
 
 # 日志文件配置路径
-logging:
-  config: classpath:log4j2-dev.xml
+#logging:
+#  config: classpath:log4j2-dev.xml
 
-swagger:
-  title: "线上学习内容管理系统"
-  description: "内容系统管理系统对课程相关信息进行管理"
-  base-package: com.studyclass.content
-  enabled: true
-  version: 1.0.0
+#swagger:
+#  title: "线上学习内容管理系统"
+#  description: "内容系统管理系统对课程相关信息进行管理"
+#  base-package: com.studyclass.content
+#  enabled: true
+#  version: 1.0.0
