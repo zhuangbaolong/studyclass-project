@@ -32,11 +32,12 @@ public class ResouceServerConfig extends ResourceServerConfigurerAdapter {
                 .stateless(true);
     }
 
+    // 需要认证的配置
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/r/**","/course/**").authenticated()//所有/r/**的请求必须认证通过 通过网关访问则不需要认证
+//                .antMatchers("/r/**","/course/**").authenticated()//所有/r/**的请求必须认证通过 ★通过网关访问则不需要认证
                 .anyRequest().permitAll()
         ;
     }
