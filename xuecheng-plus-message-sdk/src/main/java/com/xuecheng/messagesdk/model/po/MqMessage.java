@@ -52,7 +52,7 @@ public class MqMessage implements Serializable {
     /**
      * 执行次数
      */
-    private Integer executeNum;
+//    private Integer executeNum;
 
     /**
      * 处理状态，0:初始，1:成功
@@ -77,7 +77,7 @@ public class MqMessage implements Serializable {
     /**
      * 最近执行时间
      */
-    private LocalDateTime executeDate;
+//    private LocalDateTime executeDate;
 
     /**
      * 阶段1处理状态, 0:初始，1:成功

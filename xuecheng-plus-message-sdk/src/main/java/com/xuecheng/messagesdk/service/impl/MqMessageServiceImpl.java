@@ -62,7 +62,6 @@ public class MqMessageServiceImpl extends ServiceImpl<MqMessageMapper, MqMessage
         mqMessage.setState("1");
         int update = mqMessageMapper.update(mqMessage, new LambdaQueryWrapper<MqMessage>().eq(MqMessage::getId, id));
         if(update>0){
-
             mqMessage = mqMessageMapper.selectById(id);
             //添加到历史表
             MqMessageHistory mqMessageHistory = new MqMessageHistory();
@@ -73,7 +72,6 @@ public class MqMessageServiceImpl extends ServiceImpl<MqMessageMapper, MqMessage
             return 1;
         }
         return 0;
-
     }
 
     @Override

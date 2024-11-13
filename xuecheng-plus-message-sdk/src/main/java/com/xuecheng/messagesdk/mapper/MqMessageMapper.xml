@@ -9,7 +9,7 @@
         <result column="business_key1" property="businessKey1" />
         <result column="business_key2" property="businessKey2" />
         <result column="business_key3" property="businessKey3" />
-        <result column="execute_num" property="executeNum" />
+<!--        <result column="execute_num" property="executeNum" />-->
         <result column="state" property="state" />
         <result column="returnfailure_date" property="returnfailureDate" />
         <result column="returnsuccess_date" property="returnsuccessDate" />
