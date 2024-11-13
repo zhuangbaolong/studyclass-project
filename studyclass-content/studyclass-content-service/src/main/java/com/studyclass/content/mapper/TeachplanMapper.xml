@@ -42,12 +42,6 @@
         <result column="one_coursePubId" property="coursePubId"/>
         <result column="status" property="status"/>
         <result column="one_preview" property="isPreview"/>
-        <!--一对一关系-->
-        <association property="teachplanMedia" javaType="com.studyclass.content.model.po.TeachplanMedia">
-            <id column="teachplanMediaId" property="id"/>
-            <result column="mediaFilename" property="mediaFilename"></result>
-            <result column="mediaId" property="mediaId"></result>
-        </association>
         <!--映射子节点一对多映射collection,ofType：list中的对象-->
         <collection property="teachplanTreeNodes" ofType="com.studyclass.content.model.dto.TeachplanDto">
             <id column="two_id" property="id"></id>
@@ -61,6 +55,15 @@
             <result column="two_courseId" property="courseId"/>
             <result column="two_coursePubId" property="coursePubId"/>
             <result column="two_preview" property="isPreview"/>
+            <!--一对一关系-->
+            <association property="teachplanMedia" javaType="com.studyclass.content.model.po.TeachplanMedia">
+                <result column="teachplanMeidaId"   property="id" />
+                <result column="mediaFilename"   property="mediaFilename" />
+                <result column="mediaId"   property="mediaId" />
+                <result column="two_id"   property="teachplanId" />
+                <result column="two_courseId"   property="courseId" />
+                <result column="two_coursePubId"   property="coursePubId" />
+            </association>
         </collection>
     </resultMap>
     <select id="selectTeachplanTreeNodes" parameterType="long" resultMap="treeNodeResultMap">

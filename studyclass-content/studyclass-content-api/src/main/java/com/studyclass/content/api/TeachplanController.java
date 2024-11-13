@@ -1,5 +1,6 @@
 package com.studyclass.content.api;
 
+import com.studyclass.content.model.dto.BindTeachplanMediaDto;
 import com.studyclass.content.model.dto.SaveTeachplanDto;
 import com.studyclass.content.model.dto.TeachplanDto;
 import com.studyclass.content.service.TeachplanService;
@@ -17,7 +18,8 @@ public class TeachplanController {
 
     @Autowired
     TeachplanService teachplanService;
-    
+
+
     //查询课程计划
     @ApiOperation("课程计划树形结构")
     @GetMapping("/teachplan/{courseId}/tree-nodes")
@@ -41,5 +43,11 @@ public class TeachplanController {
     @PostMapping("/teachplan/{moveType}/{teachplanId}")
     public void movedownTeachplan(@PathVariable String moveType,@PathVariable Long teachplanId){
         teachplanService.moveTeachplan(moveType,teachplanId);
+    }
+
+    @ApiOperation(value = "课程计划和媒资信息绑定")
+    @PostMapping("/teachplan/association/media")
+    public void associationMedia(@RequestBody BindTeachplanMediaDto bindTeachplanMediaDto){
+        teachplanService.associationMedia(bindTeachplanMediaDto);
     }
 }

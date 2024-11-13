@@ -51,7 +51,7 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
      * @return 查询结果
      */
     @Override
-    public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
+    public PageResult<CourseBase> queryCourseBaseList(Long companyId, PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
         // 拼装查询条件
         LambdaQueryWrapper<CourseBase> queryWrapper = new LambdaQueryWrapper<>();
         // 根据名称模糊查询,在sql拼接 course_base.name like '%值%'
@@ -60,6 +60,8 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         queryWrapper.like(StringUtils.isNotEmpty(queryCourseParamsDto.getAuditStatus()), CourseBase::getAuditStatus, queryCourseParamsDto.getAuditStatus());
         // 发布状态
         queryWrapper.like(StringUtils.isNotEmpty(queryCourseParamsDto.getPublishStatus()), CourseBase::getStatus, queryCourseParamsDto.getPublishStatus());
+        // 根据培训机构id拼装查询
+        queryWrapper.eq(CourseBase::getCompanyId, companyId);
         // 创建page分页参数,参数：当前页码，每页记录数
         Page<CourseBase> page = new Page<>(pageParams.getPageNo(), pageParams.getPageSize());
         //查询
@@ -153,6 +155,12 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
             BeanUtils.copyProperties(courseMarket, courseBaseInfoDto);
         }
         //TODO 通过courseCategoryMapper查询分类信息，将分类名称放在info对象中
+        CourseCategory mtObj = courseCategoryMapper.selectById(courseBase.getMt());
+        String mtName = mtObj.getName();//大分类
+        courseBaseInfoDto.setMtName(mtName);
+        CourseCategory stObj = courseCategoryMapper.selectById(courseBase.getSt());
+        String stName = mtObj.getName();//小分类
+        courseBaseInfoDto.setStName(stName);
         return courseBaseInfoDto;
     }
 
@@ -223,28 +231,28 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
 
     @Transactional
     @Override
-    public void deleteCourseBase(Long companyId,Long courseId) {
+    public void deleteCourseBase(Long companyId, Long courseId) {
         // 课程基本信息、课程营销信息course_market、课程计划teachplan、课程计划关联信息teachplan_media、课程师资course_teacher
         CourseBase courseBase = courseBaseMapper.selectById(courseId);
         if (!companyId.equals(courseBase.getCompanyId()))
             StudyClassException.cast("只能删除本机构的课程");
         //删除师资
         LambdaQueryWrapper<CourseTeacher> courseTeacherQueryWrapper = new LambdaQueryWrapper<>();
-        courseTeacherQueryWrapper.eq(CourseTeacher::getCourseId,courseId);
+        courseTeacherQueryWrapper.eq(CourseTeacher::getCourseId, courseId);
         courseTeacherMapper.delete(courseTeacherQueryWrapper);
         //删除课程计划/媒资相关信息
         LambdaQueryWrapper<TeachplanMedia> teachplanMediaWrapper = new LambdaQueryWrapper<>();
-        teachplanMediaWrapper.eq(TeachplanMedia::getCourseId,courseId);
+        teachplanMediaWrapper.eq(TeachplanMedia::getCourseId, courseId);
         teachplanMediaMapper.delete(teachplanMediaWrapper);
         LambdaQueryWrapper<Teachplan> teachplanWrapper = new LambdaQueryWrapper<>();
-        teachplanWrapper.eq(Teachplan::getCourseId,courseId);
+        teachplanWrapper.eq(Teachplan::getCourseId, courseId);
         teachplanMapper.delete(teachplanWrapper);
         //删除课程营销信息、课程信息
         LambdaQueryWrapper<CourseMarket> courseMarketWrapper = new LambdaQueryWrapper<>();
-        courseMarketWrapper.eq(CourseMarket::getId,courseId);
+        courseMarketWrapper.eq(CourseMarket::getId, courseId);
         courseMarketMapper.delete(courseMarketWrapper);
         LambdaQueryWrapper<CourseBase> courseBaseWrapper = new LambdaQueryWrapper<>();
-        courseBaseWrapper.eq(CourseBase::getId,courseId);
+        courseBaseWrapper.eq(CourseBase::getId, courseId);
         courseBaseMapper.delete(courseBaseWrapper);
     }
 }
