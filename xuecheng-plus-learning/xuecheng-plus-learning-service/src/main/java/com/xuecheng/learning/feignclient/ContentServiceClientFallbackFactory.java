@@ -1,6 +1,6 @@
 package com.xuecheng.learning.feignclient;
 
-import com.xuecheng.content.model.po.CoursePublish;
+import com.studyclass.content.model.po.CoursePublish;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,7 @@
 package com.studyclass.content.api;
 
 import com.studyclass.content.model.dto.CoursePreviewDto;
+import com.studyclass.content.model.po.CoursePublish;
 import com.studyclass.content.service.CoursePublishService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +52,13 @@ public class CoursePublishController {
         Long companyId = 1232141425L;
         coursePublishService.publish(companyId, courseId);
     }
+
+    @ApiOperation("查询课程发布信息")
+    @ResponseBody
+    @GetMapping("/r/coursepublish/{courseId}")
+    public CoursePublish getCoursepublish(@PathVariable("courseId") Long courseId) {
+        CoursePublish coursePublish = coursePublishService.getCoursePublish(courseId);
+        return coursePublish;
+    }
+
 }

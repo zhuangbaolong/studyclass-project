@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>xuecheng-plus-learning</artifactId>
-        <groupId>com.xuecheng</groupId>
+        <groupId>com.studyclass</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>xuecheng-plus-learning-service</artifactId>
@@ -19,18 +19,18 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xuecheng</groupId>
+            <groupId>com.studyclass</groupId>
             <artifactId>xuecheng-plus-message-sdk</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.xuecheng</groupId>
+            <groupId>com.studyclass</groupId>
             <artifactId>xuecheng-plus-learning-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.xuecheng</groupId>
-            <artifactId>xuecheng-plus-content-model</artifactId>
+            <groupId>com.studyclass</groupId>
+            <artifactId>studyclass-content-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!-- MySQL 驱动 -->

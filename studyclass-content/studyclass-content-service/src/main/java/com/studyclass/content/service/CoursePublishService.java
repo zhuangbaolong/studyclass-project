@@ -1,6 +1,7 @@
 package com.studyclass.content.service;
 
 import com.studyclass.content.model.dto.CoursePreviewDto;
+import com.studyclass.content.model.po.CoursePublish;
 
 import java.io.File;
 
@@ -50,4 +51,7 @@ public interface CoursePublishService {
      * @date 2022/9/23 16:59
      */
     public void uploadCourseHtml(Long courseId,File file);
+
+    // 查询课程发布信息
+    CoursePublish getCoursePublish(Long courseId);
 }

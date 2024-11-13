@@ -249,4 +249,14 @@ public class CoursePublishServiceImpl implements CoursePublishService {
             StudyClassException.cast("上传静态文件过程中存在异常。。。");
         }
     }
+
+    /**
+     * 发布课程信息
+     * @param courseId
+     * @return
+     */
+    public CoursePublish getCoursePublish(Long courseId){
+        CoursePublish coursePublish = coursePublishMapper.selectById(courseId);
+        return coursePublish ;
+    }
 }

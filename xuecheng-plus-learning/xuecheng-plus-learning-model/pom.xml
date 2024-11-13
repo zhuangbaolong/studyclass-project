@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>xuecheng-plus-learning</artifactId>
-        <groupId>com.xuecheng</groupId>
+        <groupId>com.studyclass</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>xuecheng-plus-learning-model</artifactId>
@@ -12,8 +12,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.xuecheng</groupId>
-            <artifactId>xuecheng-plus-base</artifactId>
+            <groupId>com.studyclass</groupId>
+            <artifactId>studyclass-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--存在mybatisplus注解添加相关注解保证不报错-->

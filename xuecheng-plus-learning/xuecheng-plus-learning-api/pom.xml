@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>xuecheng-plus-learning</artifactId>
-        <groupId>com.xuecheng</groupId>
+        <groupId>com.studyclass</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>xuecheng-plus-learning-api</artifactId>
@@ -28,12 +28,12 @@
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xuecheng</groupId>
+            <groupId>com.studyclass</groupId>
             <artifactId>xuecheng-plus-learning-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.xuecheng</groupId>
+            <groupId>com.studyclass</groupId>
             <artifactId>xuecheng-plus-learning-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
