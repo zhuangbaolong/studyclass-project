@@ -26,13 +26,13 @@ import javax.annotation.Resource;
 @EnableAuthorizationServer
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
-//    @Resource(name = "authorizationServerTokenServicesCustom")
-//    private AuthorizationServerTokenServices authorizationServerTokenServices ();
-
     @Resource(name = "authorizationServerTokenServicesCustom")
-    private AuthorizationServerTokenServices authorizationServerTokenServices (){
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-    }
+    private AuthorizationServerTokenServices authorizationServerTokenServices;
+
+//    @Resource(name = "authorizationServerTokenServicesCustom")
+//    private AuthorizationServerTokenServices authorizationServerTokenServices (){
+//        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+//    }
 
     @Autowired
     private AuthenticationManager authenticationManager;

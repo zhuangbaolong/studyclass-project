@@ -9,6 +9,7 @@ import com.studyclass.content.service.CourseBaseInfoService;
 import com.studyclass.content.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  *
  */
-@Api(value = "课程信息管理",tags = "课程信息管理")
+@Api(value = "课程信息管理", tags = "课程信息管理")
 @RestController
 public class CourseBaseInfoController {
 
@@ -34,20 +35,26 @@ public class CourseBaseInfoController {
     @PreAuthorize("hasAuthority('xc_teachmanager_course_list')")
     @PostMapping("/course/list")
     public PageResult<CourseBase> list(PageParams pageParams, @RequestBody(required = false) QueryCourseParamsDto queryCourseParams) {
-        PageResult<CourseBase> pageResult = courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParams);
+        // 拿到当前登录用户
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if (StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.parseLong(user.getCompanyId());
+        }
+        PageResult<CourseBase> pageResult = courseBaseInfoService.queryCourseBaseList(companyId, pageParams, queryCourseParams);
         return pageResult;
     }
 
     @ApiOperation("添加课程")
     @PostMapping("/course")
-    public CourseBaseInfoDto add(@RequestBody @Validated(ValidationGroups.Inster.class) AddCourseDto addCourseDto){
+    public CourseBaseInfoDto add(@RequestBody @Validated(ValidationGroups.Inster.class) AddCourseDto addCourseDto) {
         CourseBaseInfoDto courseBase = courseBaseInfoService.createCourseBase(1232141425L, addCourseDto);
         return courseBase;
     }
-    
+
     @ApiOperation("查看课程")
     @GetMapping("/course/{courseId}")
-    public CourseBaseInfoDto getCourseBaseInfoById(@PathVariable Long courseId){
+    public CourseBaseInfoDto getCourseBaseInfoById(@PathVariable Long courseId) {
         //获取当前身份信息json串
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        System.out.println(principal);
@@ -58,12 +65,13 @@ public class CourseBaseInfoController {
 
     @ApiOperation("修改课程")
     @PutMapping("/course")
-    public CourseBaseInfoDto modifyCourseBase(@RequestBody @Validated EditCourseDto editCourseDto){
-        return courseBaseInfoService.modifyCourseBase(1232141425L,editCourseDto);
+    public CourseBaseInfoDto modifyCourseBase(@RequestBody @Validated EditCourseDto editCourseDto) {
+        return courseBaseInfoService.modifyCourseBase(1232141425L, editCourseDto);
     }
+
     @ApiOperation("删除课程")
     @DeleteMapping("/course/{courseId}")
-    public void deleteCourseBase(@PathVariable Long courseId){
-        courseBaseInfoService.deleteCourseBase(1232141425L,courseId);
+    public void deleteCourseBase(@PathVariable Long courseId) {
+        courseBaseInfoService.deleteCourseBase(1232141425L, courseId);
     }
 }
