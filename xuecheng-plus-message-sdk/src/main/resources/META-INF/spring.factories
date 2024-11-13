@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xuecheng.messagesdk.config.MybatisPlusConfig,\
+  com.xuecheng.messagesdk.service.impl.MqMessageServiceImpl,\
+  com.xuecheng.messagesdk.service.impl.MqMessageHistoryServiceImpl
