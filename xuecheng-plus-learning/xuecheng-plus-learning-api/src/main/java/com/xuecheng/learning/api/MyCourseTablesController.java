@@ -1,11 +1,12 @@
 package com.xuecheng.learning.api;
 
-import com.xuecheng.base.exception.XueChengPlusException;
-import com.xuecheng.base.model.PageResult;
+import com.studyclass.base.exception.StudyClassException;
+import com.studyclass.base.model.PageResult;
 import com.xuecheng.learning.model.dto.MyCourseTableParams;
 import com.xuecheng.learning.model.dto.XcChooseCourseDto;
 import com.xuecheng.learning.model.dto.XcCourseTablesDto;
 import com.xuecheng.learning.model.po.XcCourseTables;
+import com.xuecheng.learning.service.MyCourseTableService;
 import com.xuecheng.learning.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,20 +29,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyCourseTablesController {
 
+    @Autowired
+    MyCourseTableService myCourseTableService;
 
     @ApiOperation("添加选课")
     @PostMapping("/choosecourse/{courseId}")
     public XcChooseCourseDto addChooseCourse(@PathVariable("courseId") Long courseId) {
-
-        return null;
+        // 获取用户信息
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        if (user == null) {
+            StudyClassException.cast("用户请登录");
+        }
+        //
+        String userId = user.getId();
+        // 添加选课
+        XcChooseCourseDto xcChooseCourseDto = myCourseTableService.addChooseCourse(userId, courseId);
+        return xcChooseCourseDto;
     }
 
     @ApiOperation("查询学习资格")
     @PostMapping("/choosecourse/learnstatus/{courseId}")
     public XcCourseTablesDto getLearnstatus(@PathVariable("courseId") Long courseId) {
-
-        return null;
-
+        // 获取用户信息
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        if (user == null) {
+            StudyClassException.cast("用户请登录");
+        }
+        //
+        String userId = user.getId();
+        XcCourseTablesDto learningStatus = myCourseTableService.getLearningStatus(userId, courseId);
+        return learningStatus;
     }
 
     @ApiOperation("我的课程表")

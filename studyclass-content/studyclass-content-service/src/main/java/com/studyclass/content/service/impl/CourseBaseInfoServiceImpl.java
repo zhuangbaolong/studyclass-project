@@ -224,6 +224,10 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         if (i <= 0) {
             StudyClassException.cast("修改课程失败");
         }
+        // 更新营销信息
+        CourseMarket courseMarket = new CourseMarket();
+        BeanUtils.copyProperties(editCourseDto,courseMarket);
+        saveCourseMarket(courseMarket);
         //查询课程返回数据
         CourseBaseInfoDto courseBaseInfoDto = getCourseBaseInfo(courseId);
         return courseBaseInfoDto;

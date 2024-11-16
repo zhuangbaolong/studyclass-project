@@ -149,7 +149,7 @@ public class CoursePublishServiceImpl implements CoursePublishService {
     @Override
     public void publish(Long companyId, Long courseId) {
         // 判断审核是否通过
-        // 查询预发布表,向发布表写入数据
+        // 查询预发布表,如果有预发布则向发布表写入数据
         CoursePublishPre coursePublishPre = coursePublishPreMapper.selectById(courseId);
         if (coursePublishPre == null) {
             StudyClassException.cast("课程无审核记录");
